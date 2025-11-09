@@ -4,7 +4,7 @@ from .models import Library
 from .models import Book, Librarian
 # Create your views here.
 
-def list_all_books(request):
+def list_books(request):
     books = Book.objects.all().select_related('author')
 
     context = {
