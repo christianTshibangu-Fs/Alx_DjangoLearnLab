@@ -11,7 +11,7 @@ def query_all_books_by_author(author_name: str) -> QuerySet[Book]:
         author = Author.objects.get(name=author_name)
         
         # 2. Utiliser le 'related_name' ('books') pour accéder aux livres
-        books = author.books.all()
+        books = Book.objects.filter(author=author)
         
         print(f"\n--- Requête 1: Livres de {author_name} ---")
         if books.exists():
