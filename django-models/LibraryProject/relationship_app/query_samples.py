@@ -61,7 +61,7 @@ def retrieve_librarian_for_library(library_name: str) -> Librarian | None:
         
         # 2. Utiliser la relation OneToOne inversée (le nom du modèle est l'attribut par défaut)
         # Note : Si vous définissez 'library' comme PK sur Librarian, vous pouvez accéder directement.
-        librarian = Librarian.objects.get(pk=library.pk)
+        librarian = Librarian.objects.get(library=library)
         
         print(f"  - Bibliothécaire : {librarian.name}")
         print(f"  - ID Bibliothèque : {librarian.library_id}")
