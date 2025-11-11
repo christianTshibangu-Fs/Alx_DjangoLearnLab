@@ -11,7 +11,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
     
     # Vue de Déconnexion (utilise la vue intégrée de Django)
-    path('logout/', LogoutView.as_view(templete_name='relationship_app/login/'), name='logout'),
+    path('logout/', LogoutView.as_view(template_name='relationship_app/login/'), name='logout'),
     
     # Vous devriez également avoir un chemin racine pour tester les redirections
     # path('', views.home_page, name='home'), 
