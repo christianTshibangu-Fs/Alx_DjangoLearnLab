@@ -1,16 +1,17 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
-from .views import LibraryDetailView, list_books, register
+from . import views
+from .views import LibraryDetailView, list_books
 
 urlpatterns = [
     # Vue d'Inscription (utilise la vue personnalisée)
-    path('register/', register, name='register'),
+    path('register/', views.register, name='register'),
     
     # Vue de Connexion (utilise la vue intégrée de Django)
     path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
     
     # Vue de Déconnexion (utilise la vue intégrée de Django)
-    path('logout/', LogoutView.as_view(next_page='/login/'), name='logout'),
+    path('logout/', LogoutView.as_view(templete_name='relationship_app/login/'), name='logout'),
     
     # Vous devriez également avoir un chemin racine pour tester les redirections
     # path('', views.home_page, name='home'), 
