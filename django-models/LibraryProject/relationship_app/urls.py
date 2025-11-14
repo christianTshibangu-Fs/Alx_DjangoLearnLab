@@ -17,5 +17,9 @@ urlpatterns = [
     # path('', views.home_page, name='home'), 
     path('books/', list_books, name='list_books'),
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+
+    path('admin/',views.admin_view, name='admin'),
+    path('librarian/', views.librarian_view, name='librarian'),
+    path('member/', views.member_view, name='member'),
 ]
 

@@ -35,6 +35,14 @@ def home_page(request):
 
 # (Vous devez créer un template home.html si vous utilisez cette fonction)
 
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
 
 
 def list_books(request):
