@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.views.generic.detail import DetailView
 from .models import Library
 from .models import Book, Librarian
@@ -48,6 +49,20 @@ def librarian_view(request):
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
+@permission_required('relationship_app.can_add_book',login_url='login', raise_exception=True)
+def book_add(request):
+
+    return render(request, 'relationship_app/book_add.html')
+
+@permission_required('relationship_app.can_change_book', login_url='login', raise_exception=True)
+def book_edit(request, pk):
+    return render(request, 'relationship_app/book_edit.html ')
+
+    return render(request, 'relationship_app/book_update.html')
+
+@permission_required('relationship_app.can_delete_book', login_url='login', raise_exception=True)
+def book_delete(request, pk):
+    return render(request, 'relationship_app/book_delete.html')
 
 def list_books(request):
     books = Book.objects.all().select_related('author')
