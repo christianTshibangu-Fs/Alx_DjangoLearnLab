@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
 from .models import Book
-from .forms import ExempleForm
+from .forms import ExampleForm
 
 # Create your views here.
 
@@ -38,9 +38,9 @@ def book_delete(request, book_id):
 
 def example_form(request):
     if request.method == 'POST':
-        form = ExempleForm(request.POST)
+        form = ExampleForm(request.POST)
         if form.is_valid():
             form.save()
     else:
-        form = ExempleForm()
+        form = ExampleForm()
     return render(request, 'bookshelf/example_form.html', {'form': form})
