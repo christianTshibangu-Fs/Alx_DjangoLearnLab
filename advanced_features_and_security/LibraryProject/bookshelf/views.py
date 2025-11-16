@@ -43,4 +43,4 @@ def example_form(request):
             form.save()
     else:
         form = ExampleForm()
-    return render(request, 'bookshelf/example_form.html', {'form': form})
+    return render(request, 'bookshelf/form_example.html', {'form': form})
