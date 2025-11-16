@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookshelf',
-    'relationship_app',
+    
 ]
 
 # --- Configuration Obligatoire pour le Modèle Utilisateur Personnalisé ---
