@@ -9,12 +9,9 @@ def home(request):
 
 @permission_required('bookshelf.can_view', raise_exception=True)
 def book_list(request):
-    #book = book.objects.all()
+    book = Book.objects.all()
     context = {
-        'books': [
-            {'title': '1984', 'author': 'George Orwell', 'publication_year': 1949},
-            {'title': 'To Kill a Mockingbird', 'author': 'Harper Lee', 'publication_year': 1960},
-        ]
+        'books': book
     }
     return render(request, 'bookshelf/book_list.html', context)
 

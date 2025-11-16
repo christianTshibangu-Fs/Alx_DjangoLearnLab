@@ -23,10 +23,39 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+3*jcw)p8vh8v75$2or6x-#)t9h*7^3kyj46p=lnv5dddlg1(n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
 
+
+# --- Mesures de Sécurité Générales ---
+
+# Étape 1: Désactiver le mode débogage en production
+# CRITICAL: Doit être False en production.
+DEBUG = False 
+
+# Liste des hôtes autorisés en mode production.
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.votredomaine.com'] 
+
+
+# --- En-têtes de Sécurité ---
+
+# X_FRAME_OPTIONS: Protection contre le Clickjacking.
+# 'DENY' empêche l'affichage dans des iframes.
+X_FRAME_OPTIONS = 'DENY' 
+
+# SECURE_CONTENT_TYPE_NOSNIFF: Empêche le reniflage de type MIME.
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# SECURE_BROWSER_XSS_FILTER: Ajoute l'en-tête X-XSS-Protection.
+SECURE_BROWSER_XSS_FILTER = True 
+
+
+# --- Sécurité des Cookies (Nécessite HTTPS) ---
+
+# CSRF_COOKIE_SECURE: Assure que le cookie CSRF n'est envoyé qu'avec HTTPS.
+CSRF_COOKIE_SECURE = True
+
+# SESSION_COOKIE_SECURE: Assure que le cookie de session n'est envoyé qu'avec HTTPS.
+SESSION_COOKIE_SECURE = True
 
 # Application definition
 
@@ -53,7 +82,37 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CspMiddleware',
 ]
+# --- Étape 4 : Configuration de la Politique de Sécurité du Contenu (CSP) ---
+
+# NOTE: Ces paramètres sont utilisés par un middleware comme 'django-csp'.
+# Assurez-vous d'ajouter ce middleware à la liste MIDDLEWARE si vous l'utilisez réellement.
+
+# MIDDLEWARE = [
+#     # ...
+#     'csp.middleware.CspMiddleware',
+#     # ...
+# ]
+
+# CSP_DEFAULT_SRC: Source par défaut. Seul le contenu de l'application elle-même est autorisé.
+CSP_DEFAULT_SRC = ("'self'",)       
+
+# CSP_SCRIPT_SRC: Sources autorisées pour les scripts (JS). 
+# Bloque l'injection de scripts externes ou inline (XSS).
+CSP_SCRIPT_SRC = ("'self'",) 
+
+# CSP_STYLE_SRC: Sources autorisées pour les styles (CSS). 
+# Autorise les styles inline (souvent nécessaires pour le développement/librairies).
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'",) 
+
+# CSP_IMG_SRC: Sources autorisées pour les images. 
+# Autorise les images de l'application, les données encodées (data:) et toute source externe (*).
+CSP_IMG_SRC = ("'self'", "data:", "*")
+
+# CSP_FONT_SRC: Sources autorisées pour les polices.
+CSP_FONT_SRC = ("'self'",)
+
 
 ROOT_URLCONF = 'LibraryProject.urls'
 
