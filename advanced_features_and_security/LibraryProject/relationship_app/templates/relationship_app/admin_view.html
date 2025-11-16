@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>body { font-family: sans-serif; padding: 20px; background-color: #fcebeb; color: #a94442; } h1 { border-bottom: 2px solid #a94442; padding-bottom: 10px; } .role { font-weight: bold; }</style>
+</head>
+<body>
+    <h1>Administration Dashboard</h1>
+    <p>Bienvenue, <span class="role">{{ user.username }}</span>. Vous avez le rôle : **{{ user.userprofile.role }}**.</p>
+    <p>Ceci est une zone d'accès restreint uniquement aux administrateurs.</p>
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>
