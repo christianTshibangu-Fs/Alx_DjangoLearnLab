@@ -56,6 +56,11 @@ SESSION_COOKIE_SECURE = True
 # Assure que le cookie CSRF n'est envoyé qu'avec une connexion HTTPS.
 CSRF_COOKIE_SECURE = True
 
+# SECURE_PROXY_SSL_HEADER: Permet à Django de faire confiance à l'en-tête X-Forwarded-Proto.
+# Cela indique que si le serveur proxy a défini l'en-tête "HTTP_X_FORWARDED_PROTO" à "https",
+# la requête doit être considérée comme sécurisée, même si elle est arrivée à Django en HTTP.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 
 
