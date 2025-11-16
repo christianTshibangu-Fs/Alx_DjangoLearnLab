@@ -22,10 +22,44 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-+3*jcw)p8vh8v75$2or6x-#)t9h*7^3kyj46p=lnv5dddlg1(n'
 
+
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 
+# Fichier: settings.py
+########################################################################################
+# --- GESTION DE L'ENVIRONNEMENT ---
+
+# --- ÉTAPE 1 : CONFIGURATION POUR HTTPS ET HSTS ---
+
+# Redirige toutes les requêtes non-HTTPS vers HTTPS.
+# Ceci doit être utilisé lorsque votre serveur frontal (Nginx/Apache) gère déjà le SSL.
+SECURE_SSL_REDIRECT = True
+
+# Active HSTS (HTTP Strict Transport Security).
+# 31536000 secondes = 1 an. Demande aux navigateurs de n'accéder au site qu'en HTTPS.
+SECURE_HSTS_SECONDS = 31536000 
+
+# Applique la politique HSTS à tous les sous-domaines.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# Permet l'inscription de votre domaine dans la liste de préchargement HSTS du navigateur.
+SECURE_HSTS_PRELOAD = True
 
 
+# --- ÉTAPE 2 : ENFORCER LES COOKIES SÉCURISÉS (Nécessite HTTPS) ---
+
+# Assure que le cookie de session n'est envoyé qu'avec une connexion HTTPS.
+SESSION_COOKIE_SECURE = True
+
+# Assure que le cookie CSRF n'est envoyé qu'avec une connexion HTTPS.
+CSRF_COOKIE_SECURE = True
+
+
+
+
+################################################################################
 # --- Mesures de Sécurité Générales ---
 
 # Étape 1: Désactiver le mode débogage en production
@@ -57,6 +91,15 @@ CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_SECURE: Assure que le cookie de session n'est envoyé qu'avec HTTPS.
 SESSION_COOKIE_SECURE = True
 
+
+
+
+
+
+
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -82,8 +125,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'csp.middleware.CspMiddleware',
+    'csp.middleware.CspMiddleware',################
 ]
+
+
+
+
+
+########################################################################################
 # --- Étape 4 : Configuration de la Politique de Sécurité du Contenu (CSP) ---
 
 # NOTE: Ces paramètres sont utilisés par un middleware comme 'django-csp'.
@@ -112,6 +161,9 @@ CSP_IMG_SRC = ("'self'", "data:", "*")
 
 # CSP_FONT_SRC: Sources autorisées pour les polices.
 CSP_FONT_SRC = ("'self'",)
+
+
+
 
 
 ROOT_URLCONF = 'LibraryProject.urls'
