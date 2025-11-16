@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
 # --- Configuration Obligatoire pour le Modèle Utilisateur Personnalisé ---
 # Ceci doit être fait DÈS LE DÉBUT du projet.
-AUTH_USER_MODEL = 'relationship_app.CustomUser'
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
