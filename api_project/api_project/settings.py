@@ -54,10 +54,20 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'api_project.urls'
 
-DEFAULT_AUTHENTICATION_CLASSES = [
-    'rest_framework.authentication.TokenAuthentication',
-]
-
+REST_FRAMEWORK = {
+    # CRITIQUE: DÉFINIT LA POLITIQUE D'AUTORISATION PAR DÉFAUT
+    # Cette ligne indique à DRF que, sauf spécification contraire sur une vue, 
+    # l'utilisateur DOIT être authentifié (connecté) pour accéder au endpoint.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    
+    # Optionnel: Définit le type d'authentification par défaut (souvent Token ou Session)
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.SessionAuthentication',
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ]
+}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
