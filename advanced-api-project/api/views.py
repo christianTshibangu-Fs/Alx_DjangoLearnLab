@@ -1,5 +1,6 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework import filters
 from .models import Book
 from .serializers import BookSerializer # Assurez-vous d'avoir un BookSerializer fonctionnel
 
@@ -13,7 +14,9 @@ DEFAULT_PERMISSION_CLASSES = [IsAuthenticatedOrReadOnly]
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]  # Ajoutez des filtres si nécessaire
+    search_fields = ['title', 'author']  # Champs à rechercher
+    ordering_fields = ['published_date', 'title']  # Champs pour le tri
 
 #  Vue pour Créer (POST /books/)
 class BookCreateView(generics.CreateAPIView):
