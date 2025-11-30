@@ -58,7 +58,6 @@ def book_add(request):
 def book_edit(request, pk):
     return render(request, 'relationship_app/book_edit.html ')
 
-    return render(request, 'relationship_app/book_update.html')
 
 @permission_required('relationship_app.can_delete_book', login_url='login', raise_exception=True)
 def book_delete(request, pk):
