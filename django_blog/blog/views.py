@@ -24,3 +24,6 @@ def register(request):
     
     # Rend le template 'register.html' en passant le formulaire
     return render(request, 'blog/register.html', {'form': form})
+
+def profile_view(request):
+    pass
