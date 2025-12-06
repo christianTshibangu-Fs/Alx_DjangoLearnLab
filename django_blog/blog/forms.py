@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Profile, Post, Comment
+from taggit.forms import TagWidget
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -22,6 +23,10 @@ class PostForm(forms.ModelForm):
         widgets = {
             'tags': forms.TextInput(attrs={'placeholder': 'Ajouter des tags séparés par des virgules (ex: python, django, web dev)'}),
         }
+        TagWidget(attrs={
+            'class': 'tag-input',
+            'data-role': 'tagsinput',
+        })
 
 class CommentForm(forms.ModelForm):
     class Meta:
