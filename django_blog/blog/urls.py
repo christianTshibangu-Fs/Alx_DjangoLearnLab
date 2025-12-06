@@ -26,7 +26,7 @@ urlpatterns = [
 
     path('tags/', views.TaggedPostListView.as_view(), name='tag-list'),  # Vue pour lister tous les tags
     path('search/', views.SearchView.as_view(), name='post-search'),  # Vue pour la recherche de posts par tag
-
+    path('tags/<slug:tag_slug>/', "PostByTagListView.as_view()", name='posts-by-tag'),  # Vue pour afficher les posts par tag   
 
 
 
