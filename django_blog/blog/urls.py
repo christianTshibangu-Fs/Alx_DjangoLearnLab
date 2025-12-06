@@ -13,17 +13,15 @@ urlpatterns = [
 
     # ListView (Affiche tous les posts)
     path('post/', views.PostListView.as_view(), name='posts'),
-    
     # DetailView (Détail d'un post spécifique)
     path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),
-    
     # CreateView (Créer un nouveau post)
     path('post/new/', views.PostCreateView.as_view(), name='post-create'),
-    
     # UpdateView (Modifier un post spécifique)
     path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name='post-update'),
-    
     # DeleteView (Supprimer un post spécifique)
     path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'),
 
+    path('comment/<int:pk>/new/', views.CommentCreateView.as_view() , name= 'add-comment'),  # Inclure les URLs de l'application de commentaires
+    
 ]

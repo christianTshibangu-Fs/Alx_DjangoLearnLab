@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <article class="media content-section">
@@ -13,9 +14,55 @@
                         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Supprimer</a>
                     </div>
                 {% endif %}
-            </div>
-            <h2 class="article-title">{{ object.title }}</h2>
-            <p class="article-content">{{ object.content }}</p>
         </div>
+
+        
+    <!-- Section des Commentaires -->
+    <div class="comments-section mt-5">
+        <h3 class="border-bottom pb-2 mb-4">{{ comments.count }} Commentaire(s)</h3>
+
+        <!-- 1. Affichage de la liste des commentaires -->
+        {% for comment in comments %}
+            <div class="media p-3 mb-3 bg-light rounded shadow-sm">
+                <div class="media-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mt-0 mb-1">{{ comment.author.username }}</h5>
+                        <small class="text-muted">{{ comment.date_posted|date:"d M Y, H:i" }}</small>
+                    </div>
+                    <p>{{ comment.content }}</p>
+
+                    <!-- Boutons Modifier/Supprimer du Commentaire (visibles uniquement par l'auteur du Commentaire) -->
+                    {% if comment.author == user %}
+                        <div class="text-right">
+                            <a class="btn btn-sm btn-info" href="{% url 'comment-update' comment.pk %}">Modifier</a>
+                            <a class="btn btn-sm btn-danger" href="{% url 'comment-delete' comment.pk %}">Supprimer</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p>Soyez le premier à commenter !</p>
+        {% endfor %}
+        
+        <!-- 2. Formulaire de création de commentaire -->
+        <div class="comment-form-area mt-4">
+            <!-- Le formulaire n'est affiché que si l'utilisateur est connecté -->
+            {% if user.is_authenticated %}
+                <h4 class="mb-3">Ajouter un Commentaire</h4>
+                <!-- Le formulaire POST vers l'URL 'add-comment' qui utilise le PK du Post actuel -->
+                <form method="POST" action="{% url 'add-comment' object.pk %}"> 
+                    {% csrf_token %}
+                    <!-- Affichage du formulaire de commentaire via crispy_forms -->
+                    {{ CommentForm|crispy }} 
+                    <button class="btn btn-success mt-2" type="submit">Poster</button>
+                </form>
+            {% else %}
+                <p class="text-muted">Veuillez vous <a href="{% url 'login' %}">connecter</a> pour laisser un commentaire.</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+
     </article>
 {% endblock content %}

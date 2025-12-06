@@ -6,8 +6,8 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import UserUpdateForm, ProfileUpdateForm
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 
 
 # Create your views here.
@@ -73,7 +73,13 @@ class PostListView(ListView):
 # 2. DetailView (Détail d'un post - Public)
 class PostDetailView(DetailView):
     model = Post
-    # Cherche blog/post_detail.html par défaut
+    template_name= 'blog/post_detail.html' #par défaut
+    form_class = CommentForm
+
+    def form_Valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post = self.get_object()
+        return super().form_valid(form)
 
 # 3. CreateView (Créer un post - Authentifié seulement)
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -118,7 +124,54 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
+    
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/add_comment.html'
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post = Post.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
 
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = 'blog/comment_confirm_delete.html'
+    
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
+    
+    def test_func(self):
+        comment = self.get_object()
+        if self.request.user == comment.author:
+            return True
+        return False
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/edit_comment.html'
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
+    
+    def test_func(self):
+        comment = self.get_object()
+        if self.request.user == comment.author:
+            return True
+        return False
+    
+class CommentDetailView(DetailView):
+    model = Comment
+    template_name = 'blog/comment_detail.html'
 
 def post(request):
     pass

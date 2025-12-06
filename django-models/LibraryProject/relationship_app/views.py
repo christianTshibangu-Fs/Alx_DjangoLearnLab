@@ -32,7 +32,7 @@ def register(request):
 # Note: Pour le reste (Login et Logout), nous utilisons directement les vues intégrées de Django dans urls.py.
 
 # Si vous avez besoin d'une page d'accueil simple pour la redirection:
-def home_page(request):
+def home_page(request): 
     return render(request, 'relationship_app/home.html')
 
 # (Vous devez créer un template home.html si vous utilisez cette fonction)
