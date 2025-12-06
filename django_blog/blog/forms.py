@@ -23,10 +23,7 @@ class PostForm(forms.ModelForm):
         widgets = {
             'tags': forms.TextInput(attrs={'placeholder': 'Ajouter des tags séparés par des virgules (ex: python, django, web dev)'}),
         }
-        TagWidget(attrs={
-            'class': 'tag-input',
-            'data-role': 'tagsinput',
-        })
+        TagWidget()
 
 class CommentForm(forms.ModelForm):
     class Meta:
