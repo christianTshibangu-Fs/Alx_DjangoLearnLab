@@ -18,7 +18,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         # L'auteur est automatiquement défini dans la vue
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'tags']  # Étape 2: Ajout du champ 'tags' au formulaire
 
 class CommentForm(forms.ModelForm):
     class Meta:

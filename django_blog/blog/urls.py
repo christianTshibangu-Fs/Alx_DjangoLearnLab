@@ -22,6 +22,18 @@ urlpatterns = [
     # DeleteView (Supprimer un post spécifique)
     path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'),
 
+
+
+    path('tags/', views.TaggedPostListView.as_view(), name='tag-list'),  # Vue pour lister tous les tags
+    path('search/', views.SearchView.as_view(), name='post-search'),  # Vue pour la recherche de posts par tag
+
+
+
+
+
+
+
+
     path('post/<int:pk>/comments/new/', views.CommentCreateView.as_view() , name= 'add-comment'),  # Inclure les URLs de l'application de commentaires
     path('comment/<int:pk>/delete/', views.CommentDeleteView.as_view(), name='comment-delete'),
     path('comment/<int:pk>/update/', views.CommentUpdateView.as_view(), name='comment-update'),
