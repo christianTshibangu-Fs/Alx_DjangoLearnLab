@@ -133,7 +133,7 @@ class SearchView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        return Post.objects.filter(title__icontains=query)  # Recherche insensible à la casse dans les titres des posts
+        return Post.objects.filter(title__icontains=query,tags__name__icontains=query, content__icontains=query)  # Recherche insensible à la casse dans les titres des posts
     
 class TaggedPostListView(ListView):
     model = Post
