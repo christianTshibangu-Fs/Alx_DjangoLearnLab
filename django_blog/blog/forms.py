@@ -19,6 +19,12 @@ class PostForm(forms.ModelForm):
         model = Post
         # L'auteur est automatiquement défini dans la vue
         fields = ['title', 'content', 'tags']  # Étape 2: Ajout du champ 'tags' au formulaire
+        wigdets = {
+            'tags': forms.TextInput(attrs={'placeholder': 'Ajouter des tags séparés par des virgules'}),
+        }
+        Tagwidgets = {
+            'tags': forms.TextInput(attrs={'placeholder': 'Ajouter des tags séparés par des virgules'}),
+        }
 
 class CommentForm(forms.ModelForm):
     class Meta:
