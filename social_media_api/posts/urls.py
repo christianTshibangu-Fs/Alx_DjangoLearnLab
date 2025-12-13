@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import PostViewSet, CommentViewSet, UserFeedView # Import de UserFeedView
+from .views import PostViewSet, CommentViewSet, UserFeedView, LikePostView, UnlikePostView # Import de Like/Unlike Views
 
 # --- Routage de base pour les Posts (/posts/) ---
 # Utilisation de DefaultRouter pour obtenir les routes CRUD standards pour PostViewSet
@@ -34,8 +34,12 @@ urlpatterns = [
     # Route pour le détail des commentaires (GET, PUT, PATCH, DELETE)
     path('posts/<int:post_pk>/comments/<int:pk>/', comment_detail, name='post-comments-detail'),
     
-    # 3. NOUVEAU: Route pour le Flux d'Actualité (Feed)
+    # 3. Route pour le Flux d'Actualité (Feed)
     path('feed/', UserFeedView.as_view(), name='user-feed'),
+
+    # 4. NOUVEAU: Routes pour les Likes
+    path('posts/<int:pk>/like/', LikePostView.as_view(), name='post-like'),
+    path('posts/<int:pk>/unlike/', UnlikePostView.as_view(), name='post-unlike'),
 ]
 
 
