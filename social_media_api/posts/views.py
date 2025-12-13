@@ -107,13 +107,13 @@ class UserFeedView(generics.ListAPIView):
         
         # 1. Identifier les utilisateurs que l'utilisateur actuel suit (IDs)
         # On utilise le related_name 'following' défini dans le modèle CustomUser
-        followed_users = user.following.all()
+        following_users = user.following.all()
         
         # 2. Filtrer les posts : Inclure uniquement les posts dont l'auteur fait partie des utilisateurs suivis
         # Optionnel: On peut aussi inclure ses propres posts (décommenter si désiré)
         # followed_users_ids = list(followed_users.values_list('id', flat=True))
         # followed_users_ids.append(user.id) # Ajouter l'utilisateur lui-même
         
-        queryset = Post.objects.filter(author__in=followed_users).order_by
+        queryset = Post.objects.filter(author__in=following_users).order_by
         
         return queryset
