@@ -85,10 +85,10 @@ class UserFeedView(generics.ListAPIView):
     
     def get_queryset(self):
         user = self.request.user
-        followed_users = user.following.all()
+        following_users = user.following.all()
         
         # Retourne les posts des utilisateurs suivis
-        queryset = Post.objects.filter(author__in=followed_users).order_by('-created_at')
+        queryset = Post.objects.filter(author__in=following_users).order_by
         
         return queryset
 
@@ -99,12 +99,12 @@ class LikePostView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
-        post = get_object_or_404(Post, pk=pk)
+        post = generics.get_object_or_404(Post, pk=pk)
         user = request.user
 
         # Tenter de créer l'objet Like
         try:
-            Like.objects.create(post=post, user=user)
+            Like.objects.get_or_create(user=request.user, post=post)
             
             # Création de notification pour l'auteur du post
             if post.author != user:
@@ -129,7 +129,7 @@ class UnlikePostView(generics.DestroyAPIView):
     def get_object(self):
         # Récupère le Like spécifique basé sur le post_id (pk) et l'utilisateur
         post_pk = self.kwargs.get('pk')
-        post = get_object_or_404(Post, pk=post_pk)
+        post = generics.get_object_or_404(Post, pk=post_pk)
         
         try:
             # Tente de trouver l'objet Like existant
