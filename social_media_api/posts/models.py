@@ -14,7 +14,7 @@ class Post(models.Model):
         verbose_name="Auteur"
     )
     title = models.CharField(max_length=255, verbose_name="Titre du Post")
-    content = models.TextField(verbose_name="Contenu")
+    content = models.TextField()
     
     # Horodatage
     created_at = models.DateTimeField(auto_now_add=True)
@@ -44,7 +44,7 @@ class Comment(models.Model):
         related_name='comments', # Accès facile aux commentaires d'un utilisateur (user.comments.all())
         verbose_name="Auteur du Commentaire"
     )
-    content = models.TextField(verbose_name="Contenu du Commentaire")
+    content = models.TextField()
     
     # Horodatage
     created_at = models.DateTimeField(auto_now_add=True)
