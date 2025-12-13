@@ -114,6 +114,6 @@ class UserFeedView(generics.ListAPIView):
         # followed_users_ids = list(followed_users.values_list('id', flat=True))
         # followed_users_ids.append(user.id) # Ajouter l'utilisateur lui-même
         
-        queryset = Post.objects.filter(author__in=followed_users).order_by('-created_at')
+        queryset = Post.objects.filter(author__in=followed_users).order_by()
         
         return queryset
