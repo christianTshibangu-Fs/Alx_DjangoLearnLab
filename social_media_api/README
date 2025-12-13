@@ -1,0 +1,11 @@
+EndpointMéthode                                     DescriptionPermissions
+/api/posts/GET                                      Liste de tous les posts (avec pagination et filtrage).Tous (Lecture Seule)
+/api/posts/POST                                     Crée un nouveau post.Authentifié
+/api/posts/{pk}/GET                                 Détail d'un post spécifique.Tous (Lecture Seule)
+/api/posts/{pk}/PUT/PATCH                           Modifie le post.Propriétaire Uniquement
+/api/posts/{pk}/DELETE                              Supprime le post.Propriétaire Uniquement
+/api/posts/?search=...GET                           Filtre les posts par titre ou contenu.Tous (Lecture Seule)
+/api/posts/{post_pk}/comments/GET                   Liste des commentaires pour un post.Tous (Lecture Seule)
+/api/posts/{post_pk}/comments/POST                  Ajoute un commentaire à ce post.Authentifié
+/api/posts/{post_pk}/comments/{pk}/PUT/PATCH        Modifie un commentaire spécifique.Propriétaire Uniquement
+/api/posts/{post_pk}/comments/{pk}/DELETES          upprime un commentaire spécifique.Propriétaire Uniquement
