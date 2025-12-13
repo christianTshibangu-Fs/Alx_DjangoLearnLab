@@ -1,9 +1,13 @@
 from django.shortcuts import render
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets, permissions, filters, generics
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
+from django.db.models import Q # Pour des requêtes complexes
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
+
+
 # Create your views here.
 
 
@@ -84,3 +88,32 @@ class CommentViewSet(viewsets.ModelViewSet):
         
         # Sauvegarde l'objet Comment en définissant l'auteur et le post
         serializer.save(author=self.request.user, post=post)
+
+       
+# --- NOUVEAU : Vue du Flux d'Actualité (Feed) ---
+
+class UserFeedView(generics.ListAPIView):
+    """
+    Génère le flux d'actualité pour l'utilisateur connecté.
+    Affiche les posts des utilisateurs suivis, triés par date de création récente.
+    """
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = StandardResultsPagination
+    
+    def get_queryset(self):
+        # Récupère l'utilisateur connecté
+        user = self.request.user
+        
+        # 1. Identifier les utilisateurs que l'utilisateur actuel suit (IDs)
+        # On utilise le related_name 'following' défini dans le modèle CustomUser
+        followed_users = user.following.all()
+        
+        # 2. Filtrer les posts : Inclure uniquement les posts dont l'auteur fait partie des utilisateurs suivis
+        # Optionnel: On peut aussi inclure ses propres posts (décommenter si désiré)
+        # followed_users_ids = list(followed_users.values_list('id', flat=True))
+        # followed_users_ids.append(user.id) # Ajouter l'utilisateur lui-même
+        
+        queryset = Post.objects.filter(author__in=followed_users).order_by('-created_at')
+        
+        return queryset
