@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.authtoken.views import obtain_auth_token # DRF Login View
-from .views import RegisterView, ProfileView
+from .views import RegisterView, ProfileView, FollowUserView, UnfollowUserView
 
 urlpatterns = [
     # Étape 3: Enregistrement (/register)
@@ -14,4 +14,6 @@ urlpatterns = [
     # Étape 3: Gestion du Profil (/profile)
     # Permet de voir (GET) et mettre à jour (PUT/PATCH) le profil de l'utilisateur connecté
     path('profile/', ProfileView.as_view(), name='profile-management'),
+    path('unfollow/<int:user_id>/', UnfollowUserView.as_view(), name='unfollow-user'),
+    path('follow/<int:user_id>', FollowUserView.as_view(), name='follow-user'),
 ]
