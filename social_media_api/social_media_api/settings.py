@@ -23,10 +23,37 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ia+j^)$$u3n!epky_go5g%c&m=+hb!^pck&m$^^+j=4q(4*kpb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_SECONDS = 31536000
 
+# CSP_DEFAULT_SRC: Source par défaut. Seul le contenu de l'application elle-même est autorisé.
+CSP_DEFAULT_SRC = ("'self'",)       
+
+# CSP_SCRIPT_SRC: Sources autorisées pour les scripts (JS). 
+# Bloque l'injection de scripts externes ou inline (XSS).
+CSP_SCRIPT_SRC = ("'self'",) 
+
+# CSP_STYLE_SRC: Sources autorisées pour les styles (CSS). 
+# Autorise les styles inline (souvent nécessaires pour le développement/librairies).
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'",) 
+
+# CSP_IMG_SRC: Sources autorisées pour les images. 
+# Autorise les images de l'application, les données encodées (data:) et toute source externe (*).
+CSP_IMG_SRC = ("'self'", "data:", "*")
+
+# CSP_FONT_SRC: Sources autorisées pour les polices.
+CSP_FONT_SRC = ("'self'",)
 
 # Application definition
 
@@ -119,8 +146,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
