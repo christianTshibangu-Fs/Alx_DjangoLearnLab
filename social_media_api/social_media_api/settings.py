@@ -160,10 +160,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 
-STATIC_URL = 'static/'
+# Fichiers Statiques et Médias (Configuration de Déploiement)
+# Assurez-vous d'avoir 'from pathlib import Path' en haut du fichier
+
+# Emplacement où collectstatic copiera TOUS les fichiers statiques pour la production.
+# Ce répertoire doit exister et ne doit PAS être le même que STATICFILES_DIRS.
+# Nous utilisons BASE_DIR / 'staticfiles_root' comme nom commun.
+STATIC_ROOT = BASE_DIR / 'staticfiles_root'
+
+# L'URL utilisée pour demander des fichiers statiques.
+# Ceci sera l'URL de base utilisée par le CDN ou S3 en production.
+STATIC_URL = '/static/' 
+
+# Les dossiers locaux additionnels où Django cherche des fichiers statiques
+# (En plus des dossiers 'static/' dans chaque application)
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
+    # Ajoutez d'autres chemins si vous avez des fichiers statiques globaux
 ]
+
+# Si vous utilisez des fichiers média (téléchargements utilisateurs)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
