@@ -103,13 +103,26 @@ WSGI_APPLICATION = 'social_media_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'social_media_db',
+        'USER': 'social_media_user',
+        # En développement local, vous pouvez coder en dur ou utiliser .env
+        'PASSWORD': 'your_local_password', 
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Password validation
